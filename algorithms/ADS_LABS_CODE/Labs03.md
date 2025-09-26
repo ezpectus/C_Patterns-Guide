@@ -37,9 +37,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-// 🔧 Варіант 1: з проміжним масивом
+#define MAX_SIZE 100
+
+//  Варіант 1: Перестановка через проміжний масив
 void reverse_with_temp(int *A, int n) {
-    int temp[4 * n];
+    int temp[4 * MAX_SIZE];
     memcpy(temp, A, 4 * n * sizeof(int));
 
     for (int i = 0; i < n; i++) A[i]         = temp[3 * n + i];     // Ч4 → Ч1
@@ -48,7 +50,7 @@ void reverse_with_temp(int *A, int n) {
     for (int i = 0; i < n; i++) A[3 * n + i] = temp[i];             // Ч1 → Ч4
 }
 
-// 🔧 Варіант 2: in-place перестановка через реверси
+//  Варіант 2: In-place перестановка через реверси
 void reverse(int *A, int start, int end) {
     while (start < end) {
         int tmp = A[start];
@@ -67,14 +69,14 @@ void reverse_in_place(int *A, int n) {
     reverse(A, 3 * n, 4 * n - 1);       // Ч1 → Ч4
 }
 
-// 🔧 Вивід масиву
+// Вивід масиву
 void print_array(int *A, int size) {
     for (int i = 0; i < size; i++)
         printf("%d ", A[i]);
     printf("\n");
 }
 
-// 🔧 Тести
+// Тести
 void run_tests() {
     int n = 4;
     int A1[16] = {21,22,23,24, 11,12,13,14, 31,32,33,34, 41,42,43,44};
@@ -91,10 +93,12 @@ void run_tests() {
     printf("In-place:\n");
     print_array(A2, 4 * n);
 }
+
 int main() {
     run_tests();
     return 0;
 }
+
 ```
 
 ## 🧠 Архітектурна логіка (розширена)
