@@ -26,14 +26,14 @@
 #include <stdlib.h>
 #include <time.h>
 
-//  Генерація випадкової матриці
+// Генерація випадкової матриці
 void generate_matrix(int A[10][10], int m, int n, int min, int max) {
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++)
             A[i][j] = min + rand() % (max - min + 1);
 }
 
-//  Вивід матриці
+// Вивід матриці
 void print_matrix(int A[10][10], int m, int n) {
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++)
@@ -42,19 +42,22 @@ void print_matrix(int A[10][10], int m, int n) {
     }
 }
 
-//  Лінійний пошук у матриці
-int linear_search_matrix(int A[10][10], int m, int n, int target) {
-    int count = 0;
-    printf("\nЗнайдені елементи (%d):\n", target);
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            if (A[i][j] == target) {
-                printf("A[%d][%d] = %d\n", i, j, A[i][j]);
-                count++;
+// Пошук першого від’ємного у кожному стовпчику
+void find_first_negative_in_columns(int A[10][10], int m, int n) {
+    printf("\nПерші від’ємні елементи у кожному стовпчику:\n");
+    for (int j = 0; j < n; j++) {
+        int found = 0;
+        for (int i = 0; i < m; i++) {
+            if (A[i][j] < 0) {
+                printf("Стовпець %d: A[%d][%d] = %d\n", j, i, j, A[i][j]);
+                found = 1;
+                break; // беремо тільки перший
             }
         }
+        if (!found) {
+            printf("Стовпець %d: від’ємних немає\n", j);
+        }
     }
-    return count;
 }
 
 int main() {
@@ -67,12 +70,11 @@ int main() {
     printf("Матриця %dx%d:\n", m, n);
     print_matrix(A, m, n);
 
-    int target = 3;
-    int found = linear_search_matrix(A, m, n, target);
+    find_first_negative_in_columns(A, m, n);
 
-    printf("\nКількість знайдених елементів: %d\n", found);
     return 0;
 }
+
 ```
 ## 📊 Складність
 
