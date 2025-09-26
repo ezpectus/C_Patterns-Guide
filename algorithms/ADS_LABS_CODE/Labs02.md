@@ -32,26 +32,30 @@
 
 ---
 
-## 💻 Повний код на C з тестами
+## Повний код на C з тестами
 
 ```c
 #include <stdio.h>
 
 #define MAX_N 20
 
-// 🔧 Варіант: сума чисел від 1 до n з різними варіантами дій
-void dynamic_sum(int n, int variants) {
+//Програма 1: Вкладені цикли — покрокове накопичення суми
+void nested_loops_sum(int n, int variants) {
     int table[MAX_N + 1][MAX_N + 1] = {0};
     int operations = 0;
 
     for (int i = 1; i <= n; i++) {
         for (int v = 1; v <= variants; v++) {
-            table[i][v] = table[i - 1][v] + i * v;
-            operations++;
+            int sum = 0;
+            for (int j = 1; j <= i; j++) {
+                sum += j * v;
+                operations++;
+            }
+            table[i][v] = sum;
         }
     }
 
-    printf("n = %d, variants = %d\n", n, variants);
+    printf("Nested Loops — n = %d, variants = %d\n", n, variants);
     printf("Operations: %d\n", operations);
     printf("Table:\n");
     for (int i = 1; i <= n; i++) {
@@ -63,18 +67,44 @@ void dynamic_sum(int n, int variants) {
     printf("\n");
 }
 
-// 🔧 Тести
+//Програма 2: Динамічне програмування — накопичення через попередні значення
+void dynamic_sum(int n, int variants) {
+    int table[MAX_N + 1][MAX_N + 1] = {0};
+    int operations = 0;
+
+    for (int i = 1; i <= n; i++) {
+        for (int v = 1; v <= variants; v++) {
+            table[i][v] = table[i - 1][v] + i * v;
+            operations++;
+        }
+    }
+
+    printf("Dynamic Programming — n = %d, variants = %d\n", n, variants);
+    printf("Operations: %d\n", operations);
+    printf("Table:\n");
+    for (int i = 1; i <= n; i++) {
+        for (int v = 1; v <= variants; v++) {
+            printf("%4d ", table[i][v]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+//Тести
 void run_tests() {
-    dynamic_sum(5, 1);  // Один варіант
-    dynamic_sum(5, 2);  // Два варіанти
-    dynamic_sum(5, 3);  // Три варіанти
-    dynamic_sum(5, 4);  // Чотири варіанти
+    int n = 5;
+    for (int variants = 1; variants <= 4; variants++) {
+        nested_loops_sum(n, variants);
+        dynamic_sum(n, variants);
+    }
 }
 
 int main() {
     run_tests();
     return 0;
 }
+
 ```
 
 ## 🧠 Архітектурна логіка (розширена)
